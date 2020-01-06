@@ -1,2 +1,4 @@
 /venv
 /snapshot
+/tmp
+/src/.DS_Store
