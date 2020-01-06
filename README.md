@@ -1,4 +1,8 @@
 # image-recognize
+pyton 3.7.5
+pip 19.2.3
+anaconda 3-5.3.1
+
 
 pip3 install numpy<br>
 numpy-1.18.0
