@@ -3,8 +3,8 @@ import cv2
 
 class ReadMovie(object):
 
-    def __init__(self, filename):
-        capture = cv2.VideoCapture(filename)
+    def __init__(self, movie_name):
+        capture = cv2.VideoCapture(movie_name)
         self.capture = capture
         self.width = capture.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = capture.get(cv2.CAP_PROP_FRAME_HEIGHT)
