@@ -1,7 +1,7 @@
 # image-recognize
-pyton 3.7.5
-pip 19.2.3
-anaconda 3-5.3.1
+pyton 3.7.5<br>
+pip 19.2.3<br>
+anaconda 3-5.3.1<br>
 
 
 pip3 install numpy<br>
