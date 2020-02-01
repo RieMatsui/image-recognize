@@ -88,15 +88,6 @@ class FrontalFaceDetector(object):
                     self.color_f, self.line_w)
 
 
-class MainFrontalFaceDetector:
-
-    frontal_face_detector = FrontalFaceDetector("../resources/shape_predictor_68_face_landmarks.dat",
-                                                "../img/img02.jpg")
-    frontal_face_detector.detect_frontal_face()
-    cv2.imshow("img", frontal_face_detector.image)
-    cv2.imwrite("../tmp/temp.jpg", frontal_face_detector.image)
-    cv2.waitKey(0)
-
 
 
 

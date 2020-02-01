@@ -45,3 +45,21 @@ class ReadImage(object):
         if len(human) > 0:
             for (x, y, w, h) in human:
                 cv2.rectangle(self.image, (x, y), (x + w, y + h), (255, 255, 255), 3)
+
+    def get_face_list(self):
+        cascade = cv2.CascadeClassifier("../resources/haarcascade_frontalface_alt.xml")
+        face_list = cascade.detectMultiScale(self.gray, minSize=(50, 50))
+        return face_list
+
+    def mark_detected_face(self, write_image_path):
+
+        face_list = self.get_face_list()
+
+        for (x, y, w, h) in face_list:
+            color = (0, 0, 225)
+            pen_w = 3
+            cv2.rectangle(self.image, (x, y), (x + w, y + h), color, thickness=pen_w)
+
+        cv2.imwrite(write_image_path, self.image)
+        cv2.waitKey(0)
+
