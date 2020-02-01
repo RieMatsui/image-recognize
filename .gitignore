@@ -1,4 +1,6 @@
 /venv
-/snapshot
-/tmp
+/snapshots
 /src/.DS_Store
+modules/__pycache__/read_movie.cpython-37.pyc
+.DS_Store
+

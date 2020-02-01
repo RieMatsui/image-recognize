@@ -35,4 +35,15 @@ class ReadMovie(object):
         self.capture.release()
         cv2.destroyAllWindows()
 
+    def get_human_obj(self):
+        hog = cv2.HOGDescriptor()
+        hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
+        hog_params = {'winStride': (8, 8),
+                      'padding': (32, 32),
+                      'scale': 1.05,
+                      'hitThreshold': 0,
+                      'finalThreshold': 5
+                      }
+        human, r = hog.detectMultiScale(self.gray, **hog_params)
+        return human
 
