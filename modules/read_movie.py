@@ -6,6 +6,7 @@ class ReadMovie(object):
     def __init__(self, movie_name):
         capture = cv2.VideoCapture(movie_name)
         self.capture = capture
+
         self.width = capture.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = capture.get(cv2.CAP_PROP_FRAME_HEIGHT)
         self.count = capture.get(cv2.CAP_PROP_FRAME_COUNT)
@@ -35,15 +36,43 @@ class ReadMovie(object):
         self.capture.release()
         cv2.destroyAllWindows()
 
-    def get_human_obj(self):
+    @staticmethod
+    def get_human_hog():
         hog = cv2.HOGDescriptor()
         hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
+        return hog
+
+    def get_human_obj(self, frame):
+        hog = self.get_human_hog()
         hog_params = {'winStride': (8, 8),
                       'padding': (32, 32),
                       'scale': 1.05,
                       'hitThreshold': 0,
                       'finalThreshold': 5
                       }
-        human, r = hog.detectMultiScale(self.gray, **hog_params)
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        human, r = hog.detectMultiScale(gray, **hog_params)
         return human
 
+    def prepare_save_movie(self, save_file_path):
+        fourcc = cv2.VideoWriter_fourcc('X', 'V', 'I', 'D')
+        video = cv2.VideoWriter(save_file_path, fourcc, 30, (int(self.width), int(self.height)))
+        return video
+
+    def make_time_lapse(self, video):
+        num = 0
+        while self.capture.isOpened():
+            ret, frame = self.capture.read()
+            if ret:
+                if num % 10 == 0:
+                    human = self.get_human_obj(frame)
+                    if len(human) > 0:
+                        for (x, y, w, h) in human:
+                            cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 255), 3)
+                    video.write(frame)
+            else:
+                break
+            num = num + 1
+        video.release()
+        self.capture.release()
+        cv2.destroyAllWindows()
