@@ -5,9 +5,9 @@ from modules.make_graph import MakeGraph
 class MainMakeGraph:
 
     print("Start analysis")
-    read_movie = ReadMovie("../mov/mov01.avi")
+    read_movie = ReadMovie("../../mov/mov01.avi")
     people_traffic_graph = MakeGraph("time", "people", "row", "time(sec.)", "people")
-    read_movie.analysis_people_traffic(people_traffic_graph, True)
+    read_movie.analysis_people_traffic(people_traffic_graph)
     people_traffic_graph.show_graph(True)
     people_traffic_graph.print_max_and_min_num()
     print("Finish analysis")

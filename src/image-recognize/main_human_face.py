@@ -3,8 +3,8 @@ from modules.read_image import ReadImage
 
 class MainHumanFace:
 
-    READ_PATH = "../img/img02.jpg"
-    RES_PATH = "../tmp/temp.jpg"
+    READ_PATH = "../../img/img02.jpg"
+    RES_PATH = "../../tmp/temp.jpg"
     TITLE = "human faces"
 
     human_face_image = ReadImage(READ_PATH, TITLE)
