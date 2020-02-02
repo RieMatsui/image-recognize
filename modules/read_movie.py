@@ -1,4 +1,6 @@
 import cv2
+import pandas
+import matplotlib.pyplot as plt
 
 
 class ReadMovie(object):
@@ -6,7 +8,6 @@ class ReadMovie(object):
     def __init__(self, movie_name):
         capture = cv2.VideoCapture(movie_name)
         self.capture = capture
-
         self.width = capture.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = capture.get(cv2.CAP_PROP_FRAME_HEIGHT)
         self.count = capture.get(cv2.CAP_PROP_FRAME_COUNT)
@@ -59,6 +60,26 @@ class ReadMovie(object):
         video = cv2.VideoWriter(save_file_path, fourcc, 30, (int(self.width), int(self.height)))
         return video
 
+    def analysis_people_traffic(self, people_traffic_graph):
+        num = 0
+        people_traffic_graph.list_df
+        while self.capture.isOpened():
+            ret, frame = self.capture.read()
+            if ret:
+                if num % 10 == 0:
+                    human = self.get_human_obj(frame)
+                    if len(human) > 0:
+                        for (x, y, w, h) in human:
+                            cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 255), 3)
+                        people_traffic_graph.append_value(num, self.frame_per_second, len(human))
+                        if cv2.waitKey(1) & 0xFF == ord('q'):
+                            break
+            else:
+                break
+            num = num + 1
+        self.capture.release()
+        cv2.destroyAllWindows()
+
     def make_time_lapse(self, video):
         num = 0
         while self.capture.isOpened():
@@ -73,6 +94,7 @@ class ReadMovie(object):
             else:
                 break
             num = num + 1
+
         video.release()
         self.capture.release()
         cv2.destroyAllWindows()
